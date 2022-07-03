@@ -13,5 +13,19 @@ public class Client {
         f1.setVisible(true);
         l1.setBounds(500, 10, 200, 100);
         f1.add(l1);
+        JLabel name=new JLabel("Name:");
+        name.setBounds(10, 50, 100, 100);
+        f1.add(name);
+        JTextField tf=new JTextField("Enter your name",16);
+        tf.setBounds(50, 95, 200, 20);
+        f1.add(tf);
+        JButton submit =new JButton("SUBMIT");
+        submit.setBounds(60,200,200,20);
+        submit.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                l1.setText("You have typed: "+tf.getText());
+            }
+        });
+        f1.add(submit);
     }
 }
