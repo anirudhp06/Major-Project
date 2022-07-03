@@ -23,9 +23,13 @@ public class Client {
         submit.setBounds(60,200,200,20);
         submit.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
+                if(!tf.getText().equals(""))
                 l1.setText("You have typed: "+tf.getText());
             }
         });
-        f1.add(submit);
+        f1.add(submit); 
+        JLabel seats=new JLabel("Number of seats:");
+        seats.setBounds(10, 100, 100, 100);
+        f1.add(seats);
     }
 }
