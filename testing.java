@@ -63,5 +63,6 @@ public class testing{
         catch(Exception e1){
             e1.printStackTrace();
         }
+        scan.close();
 	}
 }
