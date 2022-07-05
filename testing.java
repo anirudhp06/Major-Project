@@ -17,7 +17,7 @@ public class testing{
         }
     }
 } */
-import javax.swing.*;
+/* import javax.swing.*;
 import java.sql.*;
 import java.util.Scanner;
 import java.awt.event.*;
@@ -43,8 +43,8 @@ public class testing{
                 b2.setText("Reset button Clicked");
             }
         });
-        /* b1.setActionCommand("LOGIN");
-        b2.setActionCommand("RESET"); */
+        // b1.setActionCommand("LOGIN");
+        //b2.setActionCommand("RESET");
 		f1.add(b1);
         f1.add(l1);
 		f1.add(b2);
@@ -65,4 +65,13 @@ public class testing{
         }
         scan.close();
 	}
+} */
+//Testing Slicing of String...
+public class testing{
+    public static void main(String[] args){
+        String a="Anirudh";
+        int len=a.length();
+        String b=a.substring((len-4), (len));
+        System.out.println(b);
+    }
 }

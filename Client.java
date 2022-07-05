@@ -74,8 +74,30 @@ public class Client {
             submit.setBounds(10,550,200,20);
             submit.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
-                    if(!txnID.getText().equals(""))
-                    l1.setText("txnID:"+txn.getText());
+                    if(!(txnID.getText().equals("")||txnID.getText().equals("Transaction ID generated after payment"))){
+                        String token=txn.getText().substring(txn.getText().length()-4, txn.getText().length());
+                        /* l1.setText("Token ID:"+token); */
+                        Statement stmt;
+                        try {
+                            stmt=con.createStatement();
+                            stmt.executeUpdate("insert into anirudh_ values("+token+",'Anirudh','VI B')");
+                            l1.setText("Token ID:"+token+" inserted into db successfully");
+                            System.out.println("Token ID:"+token+" inserted into db successfully");
+                        } catch (SQLException e1) {
+                            // TODO Auto-generated catch block
+                            System.out.println("Token Already exists, will insert modified one");
+                            token=txn.getText().substring(0,4);
+                            try {
+                                stmt=con.createStatement();
+                                stmt.executeUpdate("insert into anirudh_ values("+token+",'Anirudh','VI B')");
+                                l1.setText("Token ID:"+token+" modified token Inserted Successfully");
+                                System.out.println("Added modified token");
+                            } catch (SQLException e2) {
+                                // TODO Auto-generated catch block
+                                e2.printStackTrace();
+                            }
+                        }
+                    }
                 }
             });
             f1.add(submit);
