@@ -50,15 +50,15 @@ public class Client {
             ch1.setBounds(10, 270, 250, 30);
             f1.add(ch1);
 
-            JCheckBox ch2=new JCheckBox("Gobi Manchurian 150/-");
+            JCheckBox ch2=new JCheckBox("Gobi Manchurian:150/-");
             ch2.setBounds(10, 300, 250, 30);
             f1.add(ch2);
 
-            JCheckBox ch3=new JCheckBox("Paneer Manchurian 170/-");
+            JCheckBox ch3=new JCheckBox("Paneer Manchurian:170/-");
             ch3.setBounds(10, 330, 250, 30);
             f1.add(ch3);
 
-            JCheckBox ch4=new JCheckBox("Baby Corn Manchurian 160/-");
+            JCheckBox ch4=new JCheckBox("Baby Corn Manchurian:160/-");
             ch4.setBounds(10, 360, 250, 30);
             f1.add(ch4);
 
@@ -103,6 +103,7 @@ public class Client {
             f1.add(submit);
 
             JTextArea ta1=new JTextArea(10,25);
+            ta1.setEditable(false);
             ta1.setBounds(500, 150, 600, 200);
             ta1.setLineWrap(true);
             Border b3=BorderFactory.createLineBorder(Color.GREEN,10);
