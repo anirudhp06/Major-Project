@@ -188,7 +188,7 @@ public class Client {
                     if(ch4.isSelected()){bill+=160;}
                     /* System.out.println("Amount to be paid is:"+bill); */
                     JFrame f2=new JFrame();
-                    ImageIcon ii=new ImageIcon("images/cropped_qr.png");
+                    ImageIcon ii=new ImageIcon("H:/Kitchen/Major_project/images/cropped_qr.png");
                     JLabel pic=new JLabel(ii);
                     pic.setBounds(10, 50, 590, 566);
                     JScrollPane jsp=new JScrollPane(pic);
