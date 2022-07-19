@@ -130,7 +130,6 @@ public class Client {
                             // TODO Auto-generated catch block
                             e1.printStackTrace();
                         }
-                        
                     }
                 }
             });
