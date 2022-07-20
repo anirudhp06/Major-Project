@@ -1,4 +1,4 @@
-/* import java.sql.*;
+ import java.sql.*;
 import java.util.Scanner;
 public class testing{
     public static void main(String[] args){
@@ -16,7 +16,7 @@ public class testing{
             e1.printStackTrace();
         }
     }
-} */
+}
 /* import javax.swing.*;
 import java.sql.*;
 import java.util.Scanner;
@@ -67,14 +67,14 @@ public class testing{
 	}
 } */
 //Testing Slicing of String...
-public class testing{
+/*public class testing{
     public static void main(String[] args){
         String a="Anirudh";
         int len=a.length();
         String b=a.substring((len-4), (len));
         System.out.println(b);
     }
-}
+}*/
 //testing the gpg key verification.
 //testing again
 //test 3
