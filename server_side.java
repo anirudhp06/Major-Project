@@ -51,26 +51,53 @@ public class server_side {
 
             refresh.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
+                    JFrame frame = null;
+                    JTabbedPane myListTabs = null;
+                    ComicsListPane myComicsListPane = null;
+                    frame = new JFrame("Pending Bookings");
+                    myListTabs = new JTabbedPane();
+
+                    myComicsListPane = new ComicsListPane();
+                    myListTabs.add(myComicsListPane);
+                    
+                    myListTabs.setTitleAt(myListTabs.getTabCount()-1, "Status");
+                    frame.getContentPane().add(myListTabs);
+                    frame.pack();
+                    frame.setVisible(true);
+                    frame.setBounds(500, 150, 500, 500);
+
+                    JTable myComicsTable = null;
+                    DefaultTableModel model=new DefaultTableModel();
+                    myComicsTable = new JTable(model);
+                    myComicsTable.setPreferredScrollableViewportSize(new Dimension(750, 110));
+                    myComicsTable.setFillsViewportHeight(true);
+                    myComicsTable.setFillsViewportHeight(true);
+
                     try {
+                        System.out.println("Button Clicked, working");
                         Statement stmt;
-                        System.out.println("Working refresh Button");
                         stmt=con.createStatement();
                         String query="select * from order_demo where STATUS='PENDING'";
                         ResultSet rs=stmt.executeQuery(query);
                         ResultSetMetaData rsmd=rs.getMetaData();
                         int col=rsmd.getColumnCount();
                         String[] colName=new String[col];
-                        DefaultTableModel model = new DefaultTableModel(); 
-                        JTable pen = new JTable(model);
                         for(int i=0;i<col;i++)
                             colName[i]=rsmd.getColumnName(i+1);
                         model.setColumnIdentifiers(colName);
-                        pen.setBounds(350, 150, 300, 200);
-                        MainFrame.add(pen);
+                        while(rs.next()){
+                            String od=rs.getString(1);
+                            String stat=rs.getString(2);
+                            String[] row={od,stat};
+                            model.addRow(row);
+                        }
                     } catch (Exception e1) {
                         //TODO: handle exception
                         e1.printStackTrace();
                     }
+                    JScrollPane scrollPane = new JScrollPane(myComicsTable);
+                    scrollPane.setPreferredSize(new Dimension(450, 110));
+                    frame.add(scrollPane, BorderLayout.CENTER);
                 }
             });
             
