@@ -47,7 +47,7 @@ class ComicsListPane extends JPanel {
     }
 
 public class Launcher {
-    public static void main(String[] args) {
+    public void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 ViewManager vm=new ViewManager();

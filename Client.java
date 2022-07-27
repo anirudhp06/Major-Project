@@ -80,7 +80,8 @@ public class Client {
                         Statement stmt;
                         try {
                             stmt=con.createStatement();
-                            stmt.executeUpdate("insert into anirudh_ values("+token+",'Anirudh','VI B')");
+                            String query="insert into order_demo values('"+token+"','PENDING')";
+                            stmt.executeUpdate(query);
                             l1.setText("Token ID:"+token+" inserted into db successfully");
                             System.out.println("Token ID:"+token+" inserted into db successfully");
                         } catch (SQLException e1) {
@@ -89,7 +90,8 @@ public class Client {
                             token=txn.getText().substring(0,4);
                             try {
                                 stmt=con.createStatement();
-                                stmt.executeUpdate("insert into anirudh_ values("+token+",'Anirudh','VI B')");
+                                String query="insert into order_demo values('"+token+"','PENDING')";
+                                stmt.executeUpdate(query);
                                 l1.setText("Token ID:"+token+" modified token Inserted Successfully");
                                 System.out.println("Added modified token");
                             } catch (SQLException e2) {
