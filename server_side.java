@@ -88,7 +88,9 @@ public class server_side {
                         while(rs.next()){
                             String od=rs.getString(1);
                             String stat=rs.getString(2);
-                            String[] row={od,stat};
+                            int seats=rs.getInt(3);
+                            String seats_conf=Integer.toString(seats);
+                            String[] row={od,stat,seats_conf};
                             model.addRow(row);
                         }
                     } catch (Exception e1) {
