@@ -21,7 +21,6 @@ public class Client {
             f1.setTitle("Hotel Reservation System");
             f1.setBounds(100, 50, 1280, 720);
             f1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            f1.setVisible(true);
             l1.setHorizontalAlignment(JLabel.CENTER);
             l1.setSize(1000,100);
             f1.add(l1);
@@ -202,6 +201,7 @@ public class Client {
                 }
             });
             f1.add(payBill);
+            f1.setVisible(true);
         }catch(Exception e){
             e.printStackTrace();
         }

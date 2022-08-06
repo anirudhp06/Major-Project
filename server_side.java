@@ -19,7 +19,6 @@ public class server_side {
 
             JFrame MainFrame=new JFrame();
             MainFrame.setTitle("Hotel Management System");
-            MainFrame.setVisible(true);
             MainFrame.setLayout(null);
             MainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             MainFrame.setBounds(100,50,1280,720);
@@ -63,7 +62,6 @@ public class server_side {
                     myListTabs.setTitleAt(myListTabs.getTabCount()-1, "Status");
                     frame.getContentPane().add(myListTabs);
                     frame.pack();
-                    frame.setVisible(true);
                     frame.setBounds(500, 150, 500, 500);
 
                     JTable myComicsTable = null;
@@ -93,6 +91,9 @@ public class server_side {
                             String[] row={od,stat,seats_conf};
                             model.addRow(row);
                         }
+                        frame.setVisible(true);
+                        myComicsTable.setDefaultEditor(Object.class, null);
+                        //myComicsTable.setEnabled(false);
                     } catch (Exception e1) {
                         //TODO: handle exception
                         e1.printStackTrace();
@@ -102,7 +103,7 @@ public class server_side {
                     frame.add(scrollPane, BorderLayout.CENTER);
                 }
             });
-            
+            MainFrame.setVisible(true); 
         }catch(Exception e){
             e.printStackTrace();
         }
