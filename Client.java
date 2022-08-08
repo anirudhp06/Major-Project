@@ -79,12 +79,11 @@ public class Client {
                         Statement stmt;
                         try {
                             stmt=con.createStatement();
-                            String query="insert into order_demo values('"+token+"','PENDING')";
+                            String query="insert into order_demo values('"+token+"','PENDING','"+seatsInput.getText()+"')";
                             stmt.executeUpdate(query);
                             l1.setText("Token ID:"+token+" inserted into db successfully");
                             System.out.println("Token ID:"+token+" inserted into db successfully");
                         } catch (SQLException e1) {
-                            // TODO Auto-generated catch block
                             System.out.println("Token Already exists, will insert modified one");
                             token=txn.getText().substring(0,4);
                             try {
@@ -94,7 +93,6 @@ public class Client {
                                 l1.setText("Token ID:"+token+" modified token Inserted Successfully");
                                 System.out.println("Added modified token");
                             } catch (SQLException e2) {
-                                // TODO Auto-generated catch block
                                 e2.printStackTrace();
                             }
                         }

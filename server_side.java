@@ -28,9 +28,13 @@ public class server_side {
             wlcm.setSize(1000, 100);
             MainFrame.add(wlcm);
             
-            JButton refresh=new JButton("Refresh List");
-            refresh.setBounds(10, 50, 150, 20);
-            MainFrame.add(refresh);
+            JButton pendingList=new JButton("Pending List");
+            pendingList.setBounds(10, 50, 150, 20);
+            MainFrame.add(pendingList);
+
+            JButton viewBooked=new JButton("Booked List");
+            viewBooked.setBounds(250,50,150,20);
+            MainFrame.add(viewBooked);
 
             JLabel tkn=new JLabel("Token ID:");
             tkn.setBounds(20, 60, 100, 100);
@@ -42,13 +46,55 @@ public class server_side {
 
             JButton apprv=new JButton("Approve");
             apprv.setBounds(25,150,100,20);
+            apprv.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                    if(tk_Field.getText().equals("")||tk_Field.getText().equals(" ")||tk_Field.getText().equals("Enter the token Number")){
+                        wlcm.setText("Enter Valid Token Number");
+                    }
+                    else{
+                        wlcm.setVisible(false);
+                        try {
+                            System.out.println("Approve Button Clicked");
+                            Statement stmn=con.createStatement();
+                            String query="update order_demo set STATUS='BOOKED' where TOKEN='"+tk_Field.getText()+"'";
+                            stmn.executeUpdate(query);
+                            wlcm.setText("Updated token "+tk_Field.getText()+"Successfully");
+                            wlcm.setVisible(true);
+                        } catch (SQLException Se) {
+                            wlcm.setText("Error with TOKEN id please check again.");
+                            Se.printStackTrace();
+                        }
+                        MainFrame.add(wlcm);
+                    }
+                }
+            });
             MainFrame.add(apprv);
 
             JButton reject=new JButton("Reject");
             reject.setBounds(150,150,100,20);
+            reject.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                    if(tk_Field.getText().equals("")||tk_Field.getText().equals(" ")||tk_Field.getText().equals("Enter the token Number")){
+                        wlcm.setText("Enter Valid Token Number");
+                    }
+                    else{
+                        try {
+                            System.out.println("Reject Button Clicked");
+                            Statement stmn=con.createStatement();
+                            String query="update order_demo set STATUS='REJECTED' where TOKEN='"+tk_Field.getText()+"'";
+                            stmn.executeUpdate(query);
+                            wlcm.setText("Updated token "+tk_Field.getText()+"Successfully");
+                        } catch (SQLException Se) {
+                            wlcm.setText("Error with TOKEN id please check again.");
+                            Se.printStackTrace();
+                        }
+                        MainFrame.add(wlcm);
+                    }   
+                }
+            });
             MainFrame.add(reject);
 
-            refresh.addActionListener(new ActionListener(){
+            pendingList.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
                     JFrame frame = null;
                     JTabbedPane myListTabs = null;
@@ -95,7 +141,61 @@ public class server_side {
                         myComicsTable.setDefaultEditor(Object.class, null);
                         //myComicsTable.setEnabled(false);
                     } catch (Exception e1) {
-                        //TODO: handle exception
+                        e1.printStackTrace();
+                    }
+                    JScrollPane scrollPane = new JScrollPane(myComicsTable);
+                    scrollPane.setPreferredSize(new Dimension(450, 110));
+                    frame.add(scrollPane, BorderLayout.CENTER);
+                }
+            });
+
+            viewBooked.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                    JFrame frame = null;
+                    JTabbedPane myListTabs = null;
+                    ComicsListPane myComicsListPane = null;
+                    frame = new JFrame("Successfull Bookings");
+                    myListTabs = new JTabbedPane();
+
+                    myComicsListPane = new ComicsListPane();
+                    myListTabs.add(myComicsListPane);
+                    
+                    myListTabs.setTitleAt(myListTabs.getTabCount()-1, "Status");
+                    frame.getContentPane().add(myListTabs);
+                    frame.pack();
+                    frame.setBounds(500, 150, 500, 500);
+
+                    JTable myComicsTable = null;
+                    DefaultTableModel model=new DefaultTableModel();
+                    myComicsTable = new JTable(model);
+                    myComicsTable.setPreferredScrollableViewportSize(new Dimension(750, 110));
+                    myComicsTable.setFillsViewportHeight(true);
+                    myComicsTable.setFillsViewportHeight(true);
+
+                    try {
+                        System.out.println("Button Clicked, working");
+                        Statement stmt;
+                        stmt=con.createStatement();
+                        String query="select * from order_demo where STATUS='BOOKED'";
+                        ResultSet rs=stmt.executeQuery(query);
+                        ResultSetMetaData rsmd=rs.getMetaData();
+                        int col=rsmd.getColumnCount();
+                        String[] colName=new String[col];
+                        for(int i=0;i<col;i++)
+                            colName[i]=rsmd.getColumnName(i+1);
+                        model.setColumnIdentifiers(colName);
+                        while(rs.next()){
+                            String od=rs.getString(1);
+                            String stat=rs.getString(2);
+                            int seats=rs.getInt(3);
+                            String seats_conf=Integer.toString(seats);
+                            String[] row={od,stat,seats_conf};
+                            model.addRow(row);
+                        }
+                        frame.setVisible(true);
+                        myComicsTable.setDefaultEditor(Object.class, null);
+                        //myComicsTable.setEnabled(false);
+                    } catch (Exception e1) {
                         e1.printStackTrace();
                     }
                     JScrollPane scrollPane = new JScrollPane(myComicsTable);
