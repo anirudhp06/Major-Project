@@ -8,7 +8,7 @@ import javax.swing.table.DefaultTableModel;
 
 
 public class server_side {
-    public static void createTable(String stats,Connection con,JButton buttonType){
+    public static void createTable(String stats,Connection con,JButton buttonType,boolean bl){
         JFrame frame = null;
         JTabbedPane myListTabs = null;
         frame = new JFrame("Pending Bookings");
@@ -29,7 +29,11 @@ public class server_side {
             System.out.println(buttonType.getText()+" button working");
             Statement stmt;
             stmt=con.createStatement();
-            String query="select * from orders where STATUS='"+stats+"'";
+            String query;
+            if(bl)
+                query="select * from orders where STATUS='"+stats+"' or STATUS='REJECTED'";
+            else
+                query="select * from orders where STATUS='"+stats+"'";
             ResultSet rs=stmt.executeQuery(query);
             ResultSetMetaData rsmd=rs.getMetaData();
             int col=rsmd.getColumnCount();
@@ -110,7 +114,7 @@ public class server_side {
                             Statement stmn=con.createStatement();
                             String query="update orders set STATUS='BOOKED' where order_id='"+tk_Field.getText()+"'";
                             stmn.executeUpdate(query);
-                            wlcm.setText("Updated token "+tk_Field.getText()+"Successfully");
+                            wlcm.setText("Approved token: "+tk_Field.getText()+" Successfully");
                         } catch (SQLException Se) {
                             wlcm.setText("Error with TOKEN id please check again.");
                             Se.printStackTrace();
@@ -133,7 +137,7 @@ public class server_side {
                             Statement stmn=con.createStatement();
                             String query="update orders set STATUS='REJECTED' where order_id='"+tk_Field.getText()+"'";
                             stmn.executeUpdate(query);
-                            wlcm.setText("Updated token "+tk_Field.getText()+"Successfully");
+                            wlcm.setText("Rejected token "+tk_Field.getText()+" Successfully");
                         } catch (SQLException Se) {
                             wlcm.setText("Error with TOKEN id please check again.");
                             Se.printStackTrace();
@@ -146,7 +150,7 @@ public class server_side {
             pendingList.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
                     try {
-                        createTable("PENDING", con,pendingList);
+                        createTable("PENDING", con,pendingList,true);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
@@ -156,7 +160,7 @@ public class server_side {
             viewBooked.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
                     try {
-                        createTable("BOOKED", con,viewBooked);
+                        createTable("BOOKED", con,viewBooked,false);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
