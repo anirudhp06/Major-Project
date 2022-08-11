@@ -1,8 +1,4 @@
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-
-import java.awt.*;
-import java.sql.*;
 class ViewManager{
 
     JFrame frame = null;
@@ -45,6 +41,7 @@ class ComicsListPane extends JPanel {
             myComicsTable.setFillsViewportHeight(true);
             myComicsTable.setFillsViewportHeight(true); */
     }
+}
 
 public class Launcher {
     public void main(String[] args) {

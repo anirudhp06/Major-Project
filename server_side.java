@@ -2,6 +2,10 @@ import java.sql.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyVetoException;
+import java.beans.VetoableChangeListener;
+
 import javax.swing.border.*;
 import javax.swing.table.*;
 import javax.swing.table.DefaultTableModel;
@@ -9,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class server_side {
     public static void createTable(String stats,Connection con,JButton buttonType,boolean bl){
-        JFrame frame = null;
+        final JFrame frame;
         JTabbedPane myListTabs = null;
         frame = new JFrame("Pending Bookings");
         myListTabs = new JTabbedPane();
@@ -57,9 +61,22 @@ public class server_side {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addVetoableChangeListener( "focusedWindow",new VetoableChangeListener() {
+            private boolean gained = false;
+            @Override
+            public void vetoableChange( PropertyChangeEvent evt ) throws PropertyVetoException {
+            if ( evt.getNewValue() == frame ) {
+                gained = true;
+            }
+            if ( gained && evt.getNewValue() != frame ) {
+                frame.dispose();
+            }
+            }
+        } );
         JScrollPane scrollPane = new JScrollPane(myComicsTable);
         scrollPane.setPreferredSize(new Dimension(600, 110));
         frame.getContentPane().add(myListTabs);
+        frame.setAlwaysOnTop(true);
         frame.pack();
         frame.setBounds(500, 150, 950, 250);
         frame.add(scrollPane, BorderLayout.CENTER);
