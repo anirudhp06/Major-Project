@@ -49,10 +49,18 @@ public class Client {
             pstmt.setInt(4,bill);
             pstmt.setString(5, "PENDING");
             pstmt.executeUpdate();
+        
+            String OrderMaps="insert into order_maps(order_id,contact)values(?,?)";
+            PreparedStatement pt=con.prepareStatement(OrderMaps);
+            pt.setString(1, token);
+            pt.setLong(2, Long.parseLong(contactInput.getText()));
+            pt.executeUpdate();
+
             l1.setText("Token ID:"+token+" inserted into db successfully");
             System.out.println("Token ID:"+token+" inserted into db successfully");
         } catch (Exception e) {
             System.out.println("Please Generate Another Token ID and call function again");
+            e.printStackTrace();
         }
     }
     public static void main(String[] args){
