@@ -106,9 +106,9 @@ public class server_side {
                     myListTabs.add(myComicsListPane);
                     
                     myListTabs.setTitleAt(myListTabs.getTabCount()-1, "Status");
-                    frame.getContentPane().add(myListTabs);
+                    /* frame.getContentPane().add(myListTabs);
                     frame.pack();
-                    frame.setBounds(500, 150, 500, 500);
+                    frame.setBounds(500, 150, 500, 500); */
 
                     JTable myComicsTable = null;
                     DefaultTableModel model=new DefaultTableModel();
@@ -137,7 +137,6 @@ public class server_side {
                             String[] row={od,stat,seats_conf};
                             model.addRow(row);
                         }
-                        frame.setVisible(true);
                         myComicsTable.setDefaultEditor(Object.class, null);
                         //myComicsTable.setEnabled(false);
                     } catch (Exception e1) {
@@ -145,7 +144,11 @@ public class server_side {
                     }
                     JScrollPane scrollPane = new JScrollPane(myComicsTable);
                     scrollPane.setPreferredSize(new Dimension(450, 110));
+                    frame.getContentPane().add(myListTabs);
+                    frame.pack();
+                    frame.setBounds(500, 150, 500, 500);
                     frame.add(scrollPane, BorderLayout.CENTER);
+                    frame.setVisible(true);
                 }
             });
 
@@ -161,9 +164,9 @@ public class server_side {
                     myListTabs.add(myComicsListPane);
                     
                     myListTabs.setTitleAt(myListTabs.getTabCount()-1, "Status");
-                    frame.getContentPane().add(myListTabs);
+                    /* frame.getContentPane().add(myListTabs);
                     frame.pack();
-                    frame.setBounds(500, 150, 500, 500);
+                    frame.setBounds(500, 150, 500, 500); */
 
                     JTable myComicsTable = null;
                     DefaultTableModel model=new DefaultTableModel();
@@ -192,7 +195,6 @@ public class server_side {
                             String[] row={od,stat,seats_conf};
                             model.addRow(row);
                         }
-                        frame.setVisible(true);
                         myComicsTable.setDefaultEditor(Object.class, null);
                         //myComicsTable.setEnabled(false);
                     } catch (Exception e1) {
@@ -200,7 +202,12 @@ public class server_side {
                     }
                     JScrollPane scrollPane = new JScrollPane(myComicsTable);
                     scrollPane.setPreferredSize(new Dimension(450, 110));
+                    frame.getContentPane().add(myListTabs);
+                    //frame.pack();
+                    frame.setBounds(500, 150, 500, 500);
                     frame.add(scrollPane, BorderLayout.CENTER);
+                    frame.pack();
+                    frame.setVisible(true);
                 }
             });
             MainFrame.setVisible(true); 
