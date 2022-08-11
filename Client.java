@@ -5,15 +5,64 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.border.*;
 public class Client {
+    public static String gen(JTextField tkn){
+        String tk=tkn.getText().substring(tkn.getText().length()-4, tkn.getText().length());
+        return tk;
+    }
+    public static String gen_again(JTextField tkn){
+        String tk=tkn.getText().substring(0,4);;
+        return tk;
+    }
+    public static void insertRecord(Connection con,JLabel l1,JCheckBox ch1,JCheckBox ch2,JCheckBox ch3,JCheckBox ch4,String token,JTextField nameInput,JTextField contactInput,JTextField seatsInput){
+        try {
+            int bill=150;
+            if(!(ch1.isSelected()||ch2.isSelected()||ch3.isSelected()||ch4.isSelected())){bill=150;}
+            if(ch1.isSelected()){bill=150;}
+            if(ch2.isSelected()){bill+=150;}
+            if(ch3.isSelected()){bill+=170;}
+            if(ch4.isSelected()){bill+=160;}
+            Statement stmt;
+            stmt=con.createStatement();
+            String ContactQuery="insert into customer_details values('"+nameInput.getText()+"',"+contactInput.getText()+")";
+            stmt.executeUpdate(ContactQuery);
+            /*
+                * Required Things:
+                * token->order_id
+                * particulars->Starters Selected
+                * seats->total Seats required
+                * total_bill->Final bill
+                * status->By default during insertion this has to be 'PENDING'
+                */
+            String chk1="No Starters",chk2="Gobi Manchuri",chk3="Paneer Manchuri",chk4="Baby Corn Manchuri";
+            String parts="";
+            if(ch1.isSelected()){parts+=chk1;}
+            else{
+                if(ch2.isSelected()){parts+=chk2+",";}
+                if(ch3.isSelected()){parts+=chk3+",";}
+                if(ch4.isSelected()){parts+=chk4;}
+            }
+            String InsertQuery="insert into orders(order_id,particulars,seats,total_bill,status)values(?,?,?,?,?)";
+            PreparedStatement pstmt=con.prepareStatement(InsertQuery);
+            pstmt.setString(1, token);
+            pstmt.setString(2, parts);
+            pstmt.setInt(3, Integer.parseInt(seatsInput.getText()));
+            pstmt.setInt(4,bill);
+            pstmt.setString(5, "PENDING");
+            pstmt.executeUpdate();
+            l1.setText("Token ID:"+token+" inserted into db successfully");
+            System.out.println("Token ID:"+token+" inserted into db successfully");
+        } catch (Exception e) {
+            System.out.println("Please Generate Another Token ID and call function again");
+        }
+    }
     public static void main(String[] args){
         try{
             Connection con;
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String url="jdbc:oracle:thin:@localhost:1521:XE";
-            con=DriverManager.getConnection(url,"system","root");
-            System.out.println("Connected to db");
-
-            String selectQuery="select * from employee";
+            String username="project",password="project";
+            con=DriverManager.getConnection(url,username,password);
+            System.out.println("Connected to "+username+" database");
 
             JFrame f1=new JFrame();
             JLabel l1=new JLabel("Hello Welcome to the JAVA UI");
@@ -40,6 +89,14 @@ public class Client {
             JTextField seatsInput=new JTextField("Number of Seats required"); 
             seatsInput.setBounds(115, 140, 200, 20);
             f1.add(seatsInput);
+
+            JLabel contact=new JLabel("Contact Number:");
+            contact.setBounds(10,200,100,10);
+            f1.add(contact);
+
+            JTextField contactInput=new JTextField("Enter Contact Number");
+            contactInput.setBounds(115, 200, 200, 20);
+            f1.add(contactInput);
 
             JLabel starters=new JLabel("Starters");
             starters.setBounds(10,200,100,100);
@@ -71,34 +128,6 @@ public class Client {
 
             JButton submit =new JButton("SUBMIT");
             submit.setBounds(10,550,200,20);
-            submit.addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent e){
-                    if(!(txnID.getText().equals("")||txnID.getText().equals("Transaction ID generated after payment"))){
-                        String token=txn.getText().substring(txn.getText().length()-4, txn.getText().length());
-                        /* l1.setText("Token ID:"+token); */
-                        Statement stmt;
-                        try {
-                            stmt=con.createStatement();
-                            String query="insert into order_demo values('"+token+"','PENDING','"+seatsInput.getText()+"')";
-                            stmt.executeUpdate(query);
-                            l1.setText("Token ID:"+token+" inserted into db successfully");
-                            System.out.println("Token ID:"+token+" inserted into db successfully");
-                        } catch (SQLException e1) {
-                            System.out.println("Token Already exists, will insert modified one");
-                            token=txn.getText().substring(0,4);
-                            try {
-                                stmt=con.createStatement();
-                                String query="insert into order_demo values('"+token+"','PENDING')";
-                                stmt.executeUpdate(query);
-                                l1.setText("Token ID:"+token+" modified token Inserted Successfully");
-                                System.out.println("Added modified token");
-                            } catch (SQLException e2) {
-                                e2.printStackTrace();
-                            }
-                        }
-                    }
-                }
-            });
             f1.add(submit);
 
             JTextArea ta1=new JTextArea(10,25);
@@ -115,20 +144,10 @@ public class Client {
             ch1.addItemListener(new ItemListener(){
                 public void itemStateChanged(ItemEvent e){
                     if(ch1.isSelected()){
-                        Statement stmt;
-                        try {
-                            ResultSet rs;
-                            stmt = con.createStatement();
-                            rs=stmt.executeQuery(selectQuery);
-                            System.out.println("Selected all from db...");
-                            ta1.setText(ch1.getText()+"");
-                            ch2.setSelected(false);
-                            ch3.setSelected(false);
-                            ch4.setSelected(false);
-                        } catch (SQLException e1) {
-                            // TODO Auto-generated catch block
-                            e1.printStackTrace();
-                        }
+                        ta1.setText(ch1.getText()+"");
+                        ch2.setSelected(false);
+                        ch3.setSelected(false);
+                        ch4.setSelected(false);
                     }
                 }
             });
@@ -179,13 +198,6 @@ public class Client {
             payBill.setBounds(300,450,200,20);
             payBill.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
-                    int bill=150;
-                    if(!(ch1.isSelected()||ch2.isSelected()||ch3.isSelected()||ch4.isSelected())){bill=150;}
-                    if(ch1.isSelected()){bill=150;}
-                    if(ch2.isSelected()){bill+=150;}
-                    if(ch3.isSelected()){bill+=170;}
-                    if(ch4.isSelected()){bill+=160;}
-                    /* System.out.println("Amount to be paid is:"+bill); */
                     JFrame f2=new JFrame();
                     ImageIcon ii=new ImageIcon("images/cropped_qr.png");
                     JLabel pic=new JLabel(ii);
@@ -196,6 +208,20 @@ public class Client {
                     f2.add(pic);
                     f2.setTitle("Scan to Pay");
                     f2.setVisible(true);
+                }
+            });
+            submit.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                    if(!(txnID.getText().equals("")||txnID.getText().equals("Transaction ID generated after payment"))){
+                        String token=gen(txn);
+                        try {
+                            insertRecord(con, l1, ch1, ch2, ch3, ch4, token, nameInput, contactInput, seatsInput);
+                        } catch (Exception e1) {
+                            System.out.println("Token Already exists, will insert modified one");
+                            token=gen_again(txn);
+                            insertRecord(con, l1, ch1, ch2, ch3, ch4, token, nameInput, contactInput, seatsInput);
+                        }
+                    }
                 }
             });
             f1.add(payBill);
