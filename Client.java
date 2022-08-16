@@ -9,7 +9,7 @@ public class Client {
         return tk;
     }
     public static String gen_again(JTextField tkn){
-        String tk=tkn.getText().substring(0,4);;
+        String tk=tkn.getText().substring(0,4);
         return tk;
     }
     public static void insertRecord(Connection con,JLabel l1,JCheckBox ch1,JCheckBox ch2,JCheckBox ch3,JCheckBox ch4,String token,JTextField nameInput,JTextField contactInput,JTextField seatsInput){
@@ -31,7 +31,7 @@ public class Client {
                 * seats->total Seats required
                 * total_bill->Final bill
                 * status->By default during insertion this has to be 'PENDING'
-                */
+            */
             String chk1="No Starters",chk2="Gobi Manchuri",chk3="Paneer Manchuri",chk4="Baby Corn Manchuri";
             String parts="";
             if(ch1.isSelected()){parts+=chk1;}
