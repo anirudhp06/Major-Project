@@ -1,3 +1,4 @@
 *.class
 /Project.docx
 /[Bb]uild/
+.vscode/settings.json
