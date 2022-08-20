@@ -5,9 +5,6 @@ import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
-
-import javax.swing.border.*;
-import javax.swing.table.*;
 import javax.swing.table.DefaultTableModel;
 
 
