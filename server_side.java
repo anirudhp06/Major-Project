@@ -119,6 +119,8 @@ public class server_side {
             MainFrame.add(tk_Field);
 
             JButton apprv=new JButton("Approve");
+            apprv.setBackground(Color.green);
+            apprv.setOpaque(true);
             apprv.setBounds(25,150,100,20);
             apprv.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
@@ -142,6 +144,8 @@ public class server_side {
             MainFrame.add(apprv);
 
             JButton reject=new JButton("Reject");
+            reject.setBackground(Color.red);
+            reject.setOpaque(true);
             reject.setBounds(150,150,100,20);
             reject.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
