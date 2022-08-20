@@ -7,7 +7,6 @@ import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import javax.swing.table.DefaultTableModel;
 
-
 public class server_side {
     public static void createTable(String stats,Connection con,JButton buttonType,boolean bl){
         final JFrame frame;
