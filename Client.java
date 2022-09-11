@@ -72,7 +72,7 @@ public class Client {
             System.out.println("Connected to "+username+" database");
 
             JFrame f1=new JFrame();
-            JLabel l1=new JLabel("Hello Welcome to the JAVA UI");
+            JLabel l1=new JLabel("Hello Welcome to the Hotel Reservation System");
             f1.setLayout(null);
             f1.setTitle("Hotel Reservation System");
             f1.setBounds(100, 50, 1280, 720);

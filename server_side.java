@@ -93,7 +93,7 @@ public class server_side {
             MainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             MainFrame.setBounds(100,50,1280,720);
 
-            JLabel wlcm=new JLabel("Welcome to the app");
+            JLabel wlcm=new JLabel("Hotel Control Panel");
             wlcm.setHorizontalAlignment(JLabel.CENTER);
             wlcm.setSize(1000, 100);
             MainFrame.add(wlcm);
